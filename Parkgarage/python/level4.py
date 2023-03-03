@@ -1,3 +1,6 @@
+import math
+
+
 def get_inputs(filename: str):
     with open(filename, "r") as file:
         lines = file.read().splitlines()
@@ -13,14 +16,21 @@ def get_inputs(filename: str):
     for v in p:
         prices.append(int(v))
 
-    n = lines[2].split(" ")
+    w = lines[2].split(" ")
+
+    weights = []
+
+    for v in w:
+        weights.append(int(v))
+
+    n = lines[3].split(" ")
 
     numbers = []
 
     for v in n:
         numbers.append(int(v))
 
-    return (N, M, prices, numbers)
+    return (N, M, prices, weights, numbers)
 
 
 def find_free(arr: list) -> int:
@@ -35,8 +45,12 @@ def find_car(arr: list, number: int) -> int:
             return i
 
 
-for i in range(1, 5):
-    N, M, prices, numbers = get_inputs("input3/input."+str(i))
+def mult(n: int) -> int:
+    return int(math.ceil(n/100))
+
+
+for i in range(1, 4):
+    N, M, prices, weights, numbers = get_inputs("input4/input"+str(i))
 
     spaces = [-1 for x in range(N)]
     amount = 0
@@ -60,7 +74,7 @@ for i in range(1, 5):
         else:
             space = find_car(spaces, -number)
             spaces[space] = -1
-            amount += prices[space]
+            amount += prices[space] * mult(weights[-number-1])
             count -= 1
 
     print(amount)

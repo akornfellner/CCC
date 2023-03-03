@@ -50,7 +50,7 @@ def mult(n: int) -> int:
 
 
 for i in range(1, 6):
-    N, M, prices, weights, numbers = get_inputs("input5/input."+str(i))
+    N, M, prices, weights, numbers = get_inputs("input5/input"+str(i))
 
     spaces = [-1 for x in range(N)]
     amount = 0

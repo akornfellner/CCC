@@ -17,7 +17,7 @@ def get_inputs(filename: str):
 
 
 for i in range(1, 4):
-    N, M, numbers = get_inputs("input1/input."+str(i))
+    N, M, numbers = get_inputs("input1/input"+str(i))
     max = 0
     count = 0
     for number in numbers:

@@ -17,7 +17,7 @@ def get_inputs(filename: str):
 
 
 for i in range(1, 6):
-    N, M, numbers = get_inputs("input2/input."+str(i))
+    N, M, numbers = get_inputs("input2/input"+str(i))
 
     waiting = 0
     parking = 0
