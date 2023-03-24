@@ -23,18 +23,18 @@ fn solve(filename: &str) -> String {
 
     for line in lines.iter().skip(2) {
         let car = Car::new(line);
-        if car.is_in(north, east, south, west) {
+        if car.is_in(north, east, south, west) && !cars.contains(&car) {
             cars.push(car);
         }
     }
+
+    cars.sort();
 
     let mut output = String::new();
 
     for car in &cars {
         output.push_str(&format!("{},", car));
     }
-
-    cars.sort();
 
     output = output.trim_matches(',').to_string();
 
