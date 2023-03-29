@@ -52,12 +52,12 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_correct() {
+    fn test_change() {
         assert_eq!(solve("99 5 50 20 20 20 20"), "CHANGE 1 0 0 1 1 0 0 0");
     }
 
     #[test]
-    fn test_incorrect() {
+    fn test_missing() {
         assert_eq!(solve("99 4 50 5 10 10"), "MISSING 24");
     }
 }
