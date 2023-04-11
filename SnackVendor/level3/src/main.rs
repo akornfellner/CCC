@@ -21,9 +21,9 @@ fn solve(input: &str) -> String {
 
     let mut matrix = vec![vec![0; cols]; rows];
 
-    for i in 0..rows {
-        for j in 0..cols {
-            matrix[i][j] = values.next().unwrap().parse::<i32>().unwrap();
+    for row in matrix.iter_mut() {
+        for col in row.iter_mut() {
+            *col = values.next().unwrap().parse::<i32>().unwrap();
         }
     }
 
