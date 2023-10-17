@@ -23,33 +23,53 @@ fn main() {
         honeycombs.push(honeycomb);
     }
 
+    let neighbors: Vec<(i32, i32)> = vec![(-1, -1), (-1, 1), (0, -2), (0, 2), (1, -1), (1, 1)];
+
     let mut output: String = String::new();
 
     for honeycomb in &honeycombs {
-        let mut count = 0;
-        let (x, y) = get_wasp(&honeycomb);
-        for neighbour in get_neighbours(x, y) {
-            match honeycomb[neighbour.0][neighbour.1] {
-                Cell::Empty => count += 1,
-                _ => (),
+        let (x, y) = get_wasp(honeycomb);
+        let mut is_free = false;
+        'outer: for neighbor in &neighbors {
+            let (mut x, mut y) = (x, y);
+            'inner: loop {
+                let next_x = x as i32 + neighbor.0;
+                let next_y = y as i32 + neighbor.1;
+
+                if next_x < 0
+                    || next_y < 0
+                    || next_x >= honeycomb.len() as i32
+                    || next_y >= honeycomb[0].len() as i32
+                {
+                    match honeycomb[x][y] {
+                        Cell::Empty => {
+                            is_free = true;
+                            break 'outer;
+                        }
+                        _ => break 'inner,
+                    }
+                }
+
+                (x, y) = (next_x as usize, next_y as usize);
+
+                match honeycomb[x][y] {
+                    Cell::Empty => {
+                        continue 'inner;
+                    }
+                    _ => break 'inner,
+                }
             }
         }
-        output.push_str(&format!("{}\n", count));
+
+        if is_free {
+            output.push_str("FREE\n");
+        } else {
+            output.push_str("TRAPPED\n");
+        }
     }
 
     output = output.trim_matches('\n').to_string();
     fs::write("output", output).unwrap();
-}
-
-fn get_neighbours(x: usize, y: usize) -> Vec<(usize, usize)> {
-    let mut neighbours: Vec<(usize, usize)> = vec![];
-    neighbours.push((x - 1, y - 1));
-    neighbours.push((x - 1, y + 1));
-    neighbours.push((x, y - 2));
-    neighbours.push((x, y + 2));
-    neighbours.push((x + 1, y - 1));
-    neighbours.push((x + 1, y + 1));
-    neighbours
 }
 
 fn get_wasp(honeycomb: &Honeycomb) -> (usize, usize) {
