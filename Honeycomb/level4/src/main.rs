@@ -32,6 +32,7 @@ fn main() {
 
         if is_free(x, y, honeycomb, &mut visited) {
             output.push_str("FREE\n");
+            println!("{:?}", visited);
         } else {
             output.push_str("TRAPPED\n");
         }
